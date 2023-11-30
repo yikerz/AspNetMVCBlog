@@ -1,17 +1,20 @@
 ﻿using Blog.Web.Data;
 using Blog.Web.Models.Domain;
 using Blog.Web.Models.View;
+using Blog.Web.Views.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Blog.Web.Controllers
 {
     public class AdminTagsController : Controller
     {
-        private readonly BlogDbContext blogDbContext;
-        public AdminTagsController(BlogDbContext blogDbContext)
+        /* 55. Modify constructor taking TagRepo */
+        private readonly ITagRepository tagRepo;
+        public AdminTagsController(ITagRepository tagRepo)
         {
-            this.blogDbContext = blogDbContext;
+            this.tagRepo = tagRepo;
         }
 
         [HttpGet]
@@ -20,7 +23,6 @@ namespace Blog.Web.Controllers
             return View();
         }
 
-        /* 48. Implement asynchronous */
         [HttpPost]
         public async Task<IActionResult> Add(AddTagRequest addTagRequest) 
         {
@@ -29,26 +31,26 @@ namespace Blog.Web.Controllers
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName,
             };
-            await blogDbContext.Tags.AddAsync(tag);
-            await blogDbContext.SaveChangesAsync();
+            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
+            await tagRepo.AddAsync(tag);
 
 
             return RedirectToAction("List"); 
         }
 
-        /* 48. Implement asynchronous */
         [HttpGet]
         public async Task<IActionResult> List()
-        { 
-            var tags = await blogDbContext.Tags.ToListAsync();
+        {
+            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
+            var tags = await tagRepo.GetAllAsync();
 
             return View(tags);
         }
-        /* 48. Implement asynchronous */
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var tag = await blogDbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
+            var tag = await tagRepo.GetAsync(id);
             if (tag != null)
             {
                 var model = new EditTagRequest
@@ -62,31 +64,31 @@ namespace Blog.Web.Controllers
 
             return View(null);
         }
-        /* 48. Implement asynchronous */
         [HttpPost]
         public async Task<IActionResult> Edit(EditTagRequest editTagRequest)
         {
-            var tag = await blogDbContext.Tags.FindAsync(editTagRequest.Id);
-
-            if (tag != null)
+            var tag = new Tag
             {
-                tag.Name = editTagRequest.Name;
-                tag.DisplayName = editTagRequest.DisplayName;
+                Id = editTagRequest.Id,
+                Name = editTagRequest.Name,
+                DisplayName = editTagRequest.DisplayName
+            };
+            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
+            var updatedTag = await tagRepo.UpdateAsync(tag);
 
-                await blogDbContext.SaveChangesAsync();
+            if (updatedTag != null)
+            {
                 return RedirectToAction("List");
             }
             return RedirectToAction("Edit", new { id = editTagRequest.Id });
         }
-        /* 48. Implement asynchronous */
         [HttpPost]
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest) 
         {
-            var tag = await blogDbContext.Tags.FindAsync(editTagRequest.Id);
-            if (tag != null)
+            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
+            var deletedTag = await tagRepo.DeleteAsync(editTagRequest.Id);
+            if (deletedTag != null)
             {
-                blogDbContext.Tags.Remove(tag);
-                await blogDbContext.SaveChangesAsync();
                 return RedirectToAction("List");
             }
 
