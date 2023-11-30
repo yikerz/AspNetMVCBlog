@@ -10,9 +10,7 @@
 </head>
 <body>
     <header>
-        @* 12. Modify UI *@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow">
-            @* 12. Modify UI *@
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Blog.Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,16 +20,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            @* 12. Modify UI *@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @* 13. Create dropdown *@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Admin
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Add Tag</a></li>
+                                @* 17. Replace `href` by `asp`  *@
+                                <li><a class="dropdown-item"
+                                    asp-area=""
+                                    asp-controller="AdminTags"
+                                    asp-action="Add"
+                                >Add Tag</a></li>
                             </ul>
                         </li>
                     </ul>
