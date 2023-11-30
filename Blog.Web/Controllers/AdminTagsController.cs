@@ -7,7 +7,6 @@ namespace Blog.Web.Controllers
 {
     public class AdminTagsController : Controller
     {
-        /* 24. Create constructor taking DbContext */
         private readonly BlogDbContext blogDbContext;
         public AdminTagsController(BlogDbContext blogDbContext)
         {
@@ -23,18 +22,26 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public IActionResult Add(AddTagRequest addTagRequest) 
         {
-            /* 23. Map view model instance to domain model instance */
             var tag = new Tag
             {
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName,
             };
-            /* 25. Add tag into database and save changes */
             blogDbContext.Tags.Add(tag);
             blogDbContext.SaveChanges();
 
 
             return View("Add"); 
+        }
+
+        /* 26. Create List action method (GET) */
+        [HttpGet]
+        public IActionResult List()
+        { 
+            /* 28. Get all tags and pass to view */
+            var tags = blogDbContext.Tags.ToList();
+
+            return View(tags);
         }
     }
 }
