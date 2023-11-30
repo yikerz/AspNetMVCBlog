@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Blog.Web.Models.View;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Web.Controllers
 {
@@ -8,6 +9,13 @@ namespace Blog.Web.Controllers
         public IActionResult Add()
         {
             return View();
+        }
+
+        /* 20. Create Add action method (POST) */
+        [HttpPost]
+        public IActionResult Add(AddTagRequest addTagRequest) 
+        { 
+            return View("Add"); 
         }
     }
 }
