@@ -10,7 +10,6 @@ namespace Blog.Web.Controllers
 {
     public class AdminTagsController : Controller
     {
-        /* 55. Modify constructor taking TagRepo */
         private readonly ITagRepository tagRepo;
         public AdminTagsController(ITagRepository tagRepo)
         {
@@ -31,7 +30,6 @@ namespace Blog.Web.Controllers
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName,
             };
-            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
             await tagRepo.AddAsync(tag);
 
 
@@ -41,7 +39,6 @@ namespace Blog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
             var tags = await tagRepo.GetAllAsync();
 
             return View(tags);
@@ -49,7 +46,6 @@ namespace Blog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
             var tag = await tagRepo.GetAsync(id);
             if (tag != null)
             {
@@ -73,7 +69,6 @@ namespace Blog.Web.Controllers
                 Name = editTagRequest.Name,
                 DisplayName = editTagRequest.DisplayName
             };
-            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
             var updatedTag = await tagRepo.UpdateAsync(tag);
 
             if (updatedTag != null)
@@ -85,7 +80,6 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest) 
         {
-            /* 56. Switch all `BlogDbContext` methods to `TagRepo` methods */
             var deletedTag = await tagRepo.DeleteAsync(editTagRequest.Id);
             if (deletedTag != null)
             {

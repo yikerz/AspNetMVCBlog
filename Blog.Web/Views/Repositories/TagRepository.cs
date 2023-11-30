@@ -8,20 +8,17 @@ namespace Blog.Web.Views.Repositories
 {
     public class TagRepository : ITagRepository
     {
-        /* 52. Create constructor taking DbContext */
         private readonly BlogDbContext blogDbContext;
         public TagRepository(BlogDbContext blogDbContext)
         {
             this.blogDbContext = blogDbContext;
         }
-        /* 53. Migrate code from controller */
         public async Task<Tag> AddAsync(Tag tag)
         {
             await blogDbContext.Tags.AddAsync(tag);
             await blogDbContext.SaveChangesAsync();
             return tag;
         }
-        /* 53. Migrate code from controller */
         public async Task<Tag?> DeleteAsync(Guid id)
         {
             var tag = await blogDbContext.Tags.FindAsync(id);
@@ -33,13 +30,11 @@ namespace Blog.Web.Views.Repositories
             }
             return null;
         }
-        /* 53. Migrate code from controller */
         public async Task<IEnumerable<Tag>> GetAllAsync()
         {
             var tags = await blogDbContext.Tags.ToListAsync();
             return tags;
         }
-        /* 53. Migrate code from controller */
         public async Task<Tag?> GetAsync(Guid id)
         {
             var tag = await blogDbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
@@ -49,7 +44,6 @@ namespace Blog.Web.Views.Repositories
             }
             return null;
         }
-        /* 53. Migrate code from controller */
         public async Task<Tag?> UpdateAsync(Tag tag)
         {
             var existingTag = await blogDbContext.Tags.FindAsync(tag.Id);
