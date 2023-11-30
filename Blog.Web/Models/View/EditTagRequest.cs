@@ -1,5 +1,4 @@
-﻿/* 36. Create view model */
-namespace Blog.Web.Models.View
+﻿namespace Blog.Web.Models.View
 {
     public class EditTagRequest
     {

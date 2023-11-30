@@ -1,7 +1,5 @@
-﻿@* 38. Declare @model *@
-@model Blog.Web.Models.View.EditTagRequest
+﻿@model Blog.Web.Models.View.EditTagRequest
 
-@* 34. Create Edit view with header *@
 @{
 }
 
@@ -11,7 +9,6 @@
     </div>
 </div>
 
-@* 39. Conditional render update form *@
 <div class="container py-5">
     @if (Model != null)
     {
@@ -31,8 +28,19 @@
                 <input type="text" class="form-control" id="displayName" asp-for="DisplayName" />
             </div>
 
-            <div class="mb-3">
-                <button class="btn btn-dark" type="submit">Update</button>
+            <div class="d-flex">
+                <div class="mb-3">
+                    <button class="btn btn-dark" type="submit">Update</button>
+                </div>
+                @* 44. Create delete button *@
+                <div class="mb-3">
+                    <button class="btn btn-danger ms-2" type="submit"
+                            asp-area=""
+                            asp-controller="AdminTags"
+                            asp-action="Delete">
+                        Delete
+                    </button>
+                </div>
             </div>
                 
         </form>
