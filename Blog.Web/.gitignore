@@ -1,0 +1,32 @@
+# Ignore Visual Studio and Rider files
+.vs2019/
+.idea/
+
+# Ignore build and object files
+obj/
+bin/
+
+# Ignore user-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore NuGet packages
+*.nuget.props
+*.paket.*
+*.paket/
+
+# Ignore .NET Core configuration files
+appsettings.Development.json
+
+# Ignore Rider files
+.idea/
+
+# Ignore Windows-specific files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Ignore migration folder
+Migrations/
