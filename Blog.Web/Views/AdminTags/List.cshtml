@@ -1,7 +1,5 @@
-﻿@* 29. Declare @model *@
-@model List<Blog.Web.Models.Domain.Tag>
+﻿@model List<Blog.Web.Models.Domain.Tag>
 
-@* 27. Create List view with header *@
 @{
 }
 
@@ -11,7 +9,6 @@
     </div>
 </div>
 
-@* 30. Conditional render table *@
 <div class="container py-5">
     @if (Model != null && Model.Any())
     {
@@ -21,6 +18,8 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Display Name</th>
+                    @* 32. Add edit column *@
+                    <th> </th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +29,13 @@
                         <td>@tag.Id</td>
                         <td>@tag.Name</td>
                         <td>@tag.DisplayName</td>
+                        @* 32. Add edit column *@
+                        <td>
+                            <a asp-area=""
+                               asp-controller="AdminTags"
+                               asp-action="Edit"
+                               asp-route-id="@tag.Id">Edit</a>
+                        </td>
                     </tr>
                 }
             </tbody>

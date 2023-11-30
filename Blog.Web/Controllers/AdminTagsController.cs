@@ -31,17 +31,56 @@ namespace Blog.Web.Controllers
             blogDbContext.SaveChanges();
 
 
-            return View("Add"); 
+            return RedirectToAction("List"); 
         }
 
-        /* 26. Create List action method (GET) */
         [HttpGet]
         public IActionResult List()
         { 
-            /* 28. Get all tags and pass to view */
             var tags = blogDbContext.Tags.ToList();
 
             return View(tags);
         }
+        /* 33. Create Edit action method (GET) */
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            /* 35. Get tag by id */
+            var tag = blogDbContext.Tags.FirstOrDefault(t => t.Id == id);
+            /* 37. Map domain model to view model, then pass it to view */
+            if (tag != null)
+            {
+                var model = new EditTagRequest
+                {
+                    Id = id,
+                    Name = tag.Name,
+                    DisplayName = tag.DisplayName,
+                };
+                return View(model);
+            }
+
+            return View(null);
+        }
+        /* 40. Create Edit action method (POST) */
+        [HttpPost]
+        public IActionResult Edit(EditTagRequest editTagRequest)
+        {
+            /* 41. Get domain model by id */
+            var tag = blogDbContext.Tags.Find(editTagRequest.Id);
+
+            /* 42. Update domain model and save change */
+            if (tag != null)
+            {
+                tag.Name = editTagRequest.Name;
+                tag.DisplayName = editTagRequest.DisplayName;
+
+                blogDbContext.SaveChanges();
+                /* 43. Redirect to List action method */
+                return RedirectToAction("List");
+            }
+            /* 43. Redirect to Edit action method */
+            return RedirectToAction("Edit", new { id = editTagRequest.Id });
+        }
+
     }
 }
