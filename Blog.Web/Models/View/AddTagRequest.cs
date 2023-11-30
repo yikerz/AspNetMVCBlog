@@ -1,5 +1,4 @@
-﻿/* 19. Create view model */
-using Blog.Web.Models.Domain;
+﻿using Blog.Web.Models.Domain;
 
 namespace Blog.Web.Models.View
 {
