@@ -2,6 +2,7 @@
 using Blog.Web.Models.Domain;
 using Blog.Web.Models.View;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Controllers
 {
@@ -19,32 +20,35 @@ namespace Blog.Web.Controllers
             return View();
         }
 
+        /* 48. Implement asynchronous */
         [HttpPost]
-        public IActionResult Add(AddTagRequest addTagRequest) 
+        public async Task<IActionResult> Add(AddTagRequest addTagRequest) 
         {
             var tag = new Tag
             {
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName,
             };
-            blogDbContext.Tags.Add(tag);
-            blogDbContext.SaveChanges();
+            await blogDbContext.Tags.AddAsync(tag);
+            await blogDbContext.SaveChangesAsync();
 
 
             return RedirectToAction("List"); 
         }
 
+        /* 48. Implement asynchronous */
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         { 
-            var tags = blogDbContext.Tags.ToList();
+            var tags = await blogDbContext.Tags.ToListAsync();
 
             return View(tags);
         }
+        /* 48. Implement asynchronous */
         [HttpGet]
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var tag = blogDbContext.Tags.FirstOrDefault(t => t.Id == id);
+            var tag = await blogDbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
             if (tag != null)
             {
                 var model = new EditTagRequest
@@ -58,32 +62,31 @@ namespace Blog.Web.Controllers
 
             return View(null);
         }
+        /* 48. Implement asynchronous */
         [HttpPost]
-        public IActionResult Edit(EditTagRequest editTagRequest)
+        public async Task<IActionResult> Edit(EditTagRequest editTagRequest)
         {
-            var tag = blogDbContext.Tags.Find(editTagRequest.Id);
+            var tag = await blogDbContext.Tags.FindAsync(editTagRequest.Id);
 
             if (tag != null)
             {
                 tag.Name = editTagRequest.Name;
                 tag.DisplayName = editTagRequest.DisplayName;
 
-                blogDbContext.SaveChanges();
+                await blogDbContext.SaveChangesAsync();
                 return RedirectToAction("List");
             }
             return RedirectToAction("Edit", new { id = editTagRequest.Id });
         }
-        /* 45. Create Delete action method (POST) */
+        /* 48. Implement asynchronous */
         [HttpPost]
-        public IActionResult Delete(EditTagRequest editTagRequest) 
+        public async Task<IActionResult> Delete(EditTagRequest editTagRequest) 
         {
-            /* 46. Get tag by id */
-            var tag = blogDbContext.Tags.Find(editTagRequest.Id);
-            /* 47. Remove tag from database */
+            var tag = await blogDbContext.Tags.FindAsync(editTagRequest.Id);
             if (tag != null)
             {
                 blogDbContext.Tags.Remove(tag);
-                blogDbContext.SaveChanges();
+                await blogDbContext.SaveChangesAsync();
                 return RedirectToAction("List");
             }
 
