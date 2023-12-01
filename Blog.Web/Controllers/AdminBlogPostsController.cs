@@ -88,11 +88,9 @@ namespace Blog.Web.Controllers
             }
             return View(null);
         }
-        /* 97. Create Edit action method (POST) */
         [HttpPost]
         public async Task<IActionResult> Edit(EditBlogPostRequest editBlogPostRequest)
         {
-            /* 98. Map view model to domain model */
             var blogPost = new BlogPost
             {
                 Id = editBlogPostRequest.Id,
@@ -120,7 +118,6 @@ namespace Blog.Web.Controllers
             }
             blogPost.Tags = selectedTags;
 
-            /* 100. Run UpdateAsync */
             var updatedBlogPost = await blogPostRepo.UpdateAsync(blogPost);
 
             if (updatedBlogPost != null)
@@ -128,6 +125,18 @@ namespace Blog.Web.Controllers
                 return RedirectToAction("List");
             }
 
+            return RedirectToAction("Edit", new { id = editBlogPostRequest.Id });
+        }
+        /* 102. Create Delete action method (POST) */
+        [HttpPost]
+        public async Task<IActionResult> Delete(EditBlogPostRequest editBlogPostRequest) 
+        {
+            /* 104. Complete the action method */
+            var deletedPost = await blogPostRepo.DeleteAsync(editBlogPostRequest.Id);
+            if (deletedPost != null)
+            {
+                return RedirectToAction("List");
+            }
             return RedirectToAction("Edit", new { id = editBlogPostRequest.Id });
         }
     }

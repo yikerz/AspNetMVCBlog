@@ -62,14 +62,19 @@
                         asp-items="@Model.Tags"
                         asp-for="SelectedTags"></select>
             </div>
-
-            @* 96. Create update button *@
-            <div class="mb-3">
+            @* 101. Create delete button *@
+            <div class="mb-3 d-flex">
                 <button type="submit" class="btn btn-dark"
                     asp-area=""
                     asp-controller="AdminBlogPosts"
                     asp-action="Edit"
                 >Update</button>
+                <button type="submit"
+                        class="btn btn-danger ms-2"
+                        asp-area=""
+                        asp-controller="AdminBlogPosts"
+                        asp-action="Delete"
+                >Delete</button>
             </div>
 
         </form>
