@@ -41,7 +41,6 @@ namespace Blog.Web.Repositories
 
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
-            /* Fixing bug: forget to include related prop */
             var existingBlogPost = await blogDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
             if (existingBlogPost != null)
             {
