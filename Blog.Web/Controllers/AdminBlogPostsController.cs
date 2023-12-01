@@ -60,14 +60,11 @@ namespace Blog.Web.Controllers
             var blogPosts = await blogPostRepo.GetAllAsync();
             return View(blogPosts);
         }
-        /* 88. Create Edit action method (GET) */
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {  
-            /* 91. Get blog post by Id */
             var blogPost = await blogPostRepo.GetAsync(id);
 
-            /* 93. Map domain model to view model */
             if (blogPost != null)
             {
                 var model = new EditBlogPostRequest
@@ -91,6 +88,47 @@ namespace Blog.Web.Controllers
             }
             return View(null);
         }
+        /* 97. Create Edit action method (POST) */
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditBlogPostRequest editBlogPostRequest)
+        {
+            /* 98. Map view model to domain model */
+            var blogPost = new BlogPost
+            {
+                Id = editBlogPostRequest.Id,
+                Heading = editBlogPostRequest.Heading,
+                PageTitle = editBlogPostRequest.PageTitle,
+                Content = editBlogPostRequest.Content,
+                ShortDescription = editBlogPostRequest.ShortDescription,
+                FeaturedImageUrl = editBlogPostRequest.FeaturedImageUrl,
+                UrlHandle = editBlogPostRequest.UrlHandle,
+                PublishedDate = editBlogPostRequest.PublishedDate,
+                Author = editBlogPostRequest.Author,
+                Visible = editBlogPostRequest.Visible,
+            };
+            var selectedTags = new List<Tag>();
+            foreach (var selectedTag in editBlogPostRequest.SelectedTags) 
+            {
+                if (Guid.TryParse(selectedTag, out var tagId)) 
+                {
+                    var foundTag = await tagRepo.GetAsync(tagId);
+                    if (foundTag != null)
+                    {
+                        selectedTags.Add(foundTag);
+                    }
+                }
+            }
+            blogPost.Tags = selectedTags;
 
+            /* 100. Run UpdateAsync */
+            var updatedBlogPost = await blogPostRepo.UpdateAsync(blogPost);
+
+            if (updatedBlogPost != null)
+            {
+                return RedirectToAction("List");
+            }
+
+            return RedirectToAction("Edit", new { id = editBlogPostRequest.Id });
+        }
     }
 }

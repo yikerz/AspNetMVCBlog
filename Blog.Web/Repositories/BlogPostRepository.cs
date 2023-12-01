@@ -27,15 +27,33 @@ namespace Blog.Web.Repositories
             return await blogDbContext.BlogPosts.Include(x=>x.Tags).ToListAsync();
         }
 
-        /* 90. Implements GetAsync */
         public async Task<BlogPost?> GetAsync(Guid id)
         {
             return await blogDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<BlogPost?> UpdateAsync(BlogPost blogPost)
+        public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
-            throw new NotImplementedException();
+            /* 99. Implements UpdateAsync */
+            var existingBlogPost = await blogDbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+            if (existingBlogPost != null)
+            {
+                existingBlogPost.Id = blogPost.Id;
+                existingBlogPost.Heading = blogPost.Heading;
+                existingBlogPost.PageTitle = blogPost.PageTitle;
+                existingBlogPost.Content = blogPost.Content;
+                existingBlogPost.ShortDescription = blogPost.ShortDescription;
+                existingBlogPost.FeaturedImageUrl = blogPost.FeaturedImageUrl;
+                existingBlogPost.UrlHandle = blogPost.UrlHandle;
+                existingBlogPost.PublishedDate = blogPost.PublishedDate;
+                existingBlogPost.Author = blogPost.Author;
+                existingBlogPost.Visible = blogPost.Visible;
+                existingBlogPost.Tags = blogPost.Tags;
+
+                await blogDbContext.SaveChangesAsync();
+                return existingBlogPost;
+            }
+            return null;
         }
     }
 }

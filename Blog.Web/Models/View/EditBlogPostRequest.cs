@@ -1,5 +1,4 @@
-﻿/* 92. Create view model */
-using Blog.Web.Models.Domain;
+﻿using Blog.Web.Models.Domain;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blog.Web.Models.View

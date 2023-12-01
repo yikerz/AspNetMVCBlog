@@ -1,7 +1,5 @@
-﻿@* 94. Declare @model *@
-@model Blog.Web.Models.View.EditBlogPostRequest
+﻿@model Blog.Web.Models.View.EditBlogPostRequest
 
-@* 89. Create view for Edit action with header *@
 @{
 }
 
@@ -11,7 +9,6 @@
     </div>
 </div>
 
-@* 95. Create form for updating blog post *@
 <div class="container py-5">
     @if (Model != null)
     {
@@ -66,8 +63,13 @@
                         asp-for="SelectedTags"></select>
             </div>
 
+            @* 96. Create update button *@
             <div class="mb-3">
-                <button type="submit" class="btn btn-dark">Save</button>
+                <button type="submit" class="btn btn-dark"
+                    asp-area=""
+                    asp-controller="AdminBlogPosts"
+                    asp-action="Edit"
+                >Update</button>
             </div>
 
         </form>
