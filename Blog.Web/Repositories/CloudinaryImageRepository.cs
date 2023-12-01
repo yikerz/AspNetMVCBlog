@@ -1,11 +1,39 @@
-﻿/* 112. Create repo class implemented from repo interface */
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+
 namespace Blog.Web.Repositories
 {
     public class CloudinaryImageRepository : IImageRepository
     {
-        public Task<string> UploadAsync(IFormFile file)
+        /* 115. Create constructor taking IConfig and create account */
+        private readonly IConfiguration configuration;
+        private readonly Account account;
+        public CloudinaryImageRepository(IConfiguration configuration)
         {
-            throw new NotImplementedException();
+            this.configuration = configuration;
+            account = new Account(configuration.GetSection("Cloudinary")["CloudName"],
+                                  configuration.GetSection("Cloudinary")["ApiKey"],
+                                  configuration.GetSection("Cloudinary")["ApiSecret"]);
+        }
+        public async Task<string> UploadAsync(IFormFile file)
+        {
+            /* 116. Upload to Cloudinary */
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(file.FileName, file.OpenReadStream()),
+                DisplayName = file.FileName,
+            };
+            var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+            /* 117. return URI if upload successful */
+            if (uploadResult != null && uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return uploadResult.SecureUri.ToString();
+            }
+
+            return null;
         }
     }
 }
