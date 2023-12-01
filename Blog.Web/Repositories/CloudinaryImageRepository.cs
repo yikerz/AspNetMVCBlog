@@ -5,7 +5,6 @@ namespace Blog.Web.Repositories
 {
     public class CloudinaryImageRepository : IImageRepository
     {
-        /* 115. Create constructor taking IConfig and create account */
         private readonly IConfiguration configuration;
         private readonly Account account;
         public CloudinaryImageRepository(IConfiguration configuration)
@@ -17,7 +16,6 @@ namespace Blog.Web.Repositories
         }
         public async Task<string> UploadAsync(IFormFile file)
         {
-            /* 116. Upload to Cloudinary */
             Cloudinary cloudinary = new Cloudinary(account);
 
             var uploadParams = new ImageUploadParams()
@@ -27,7 +25,6 @@ namespace Blog.Web.Repositories
             };
             var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
-            /* 117. return URI if upload successful */
             if (uploadResult != null && uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return uploadResult.SecureUri.ToString();
