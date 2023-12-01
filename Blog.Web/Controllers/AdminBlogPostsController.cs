@@ -1,6 +1,6 @@
 ﻿using Blog.Web.Models.Domain;
 using Blog.Web.Models.View;
-using Blog.Web.Views.Repositories;
+using Blog.Web.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

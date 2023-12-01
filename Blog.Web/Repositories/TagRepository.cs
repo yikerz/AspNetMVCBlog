@@ -1,10 +1,9 @@
-﻿/* 51. Create repository implementing interface */
-using Blog.Web.Data;
+﻿using Blog.Web.Data;
 using Blog.Web.Models.Domain;
 using Blog.Web.Models.View;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blog.Web.Views.Repositories
+namespace Blog.Web.Repositories
 {
     public class TagRepository : ITagRepository
     {
@@ -22,7 +21,7 @@ namespace Blog.Web.Views.Repositories
         public async Task<Tag?> DeleteAsync(Guid id)
         {
             var tag = await blogDbContext.Tags.FindAsync(id);
-            if (tag != null) 
+            if (tag != null)
             {
                 blogDbContext.Tags.Remove(tag);
                 await blogDbContext.SaveChangesAsync();
@@ -38,8 +37,8 @@ namespace Blog.Web.Views.Repositories
         public async Task<Tag?> GetAsync(Guid id)
         {
             var tag = await blogDbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
-            if (tag != null) 
-            { 
+            if (tag != null)
+            {
                 return tag;
             }
             return null;
@@ -47,8 +46,8 @@ namespace Blog.Web.Views.Repositories
         public async Task<Tag?> UpdateAsync(Tag tag)
         {
             var existingTag = await blogDbContext.Tags.FindAsync(tag.Id);
-            if (existingTag != null) 
-            { 
+            if (existingTag != null)
+            {
                 existingTag.Name = tag.Name;
                 existingTag.DisplayName = tag.DisplayName;
                 await blogDbContext.SaveChangesAsync();

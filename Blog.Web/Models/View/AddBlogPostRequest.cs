@@ -14,7 +14,6 @@ namespace Blog.Web.Models.View
         public string Author { get; set; }
         public bool Visible { get; set; }
         public IEnumerable<SelectListItem> Tags { get; set; }
-        /* 69. Handle multiple tags  */
         public string[] SelectedTag { get; set; } = Array.Empty<string>();
     }
 }
