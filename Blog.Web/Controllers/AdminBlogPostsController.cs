@@ -8,7 +8,6 @@ namespace Blog.Web.Controllers
 {
     public class AdminBlogPostsController : Controller
     {
-        /* 65. Create constructor */
         private readonly ITagRepository tagRepo;
         public AdminBlogPostsController(ITagRepository tagRepo)
         {
@@ -17,7 +16,6 @@ namespace Blog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            /* 66. Pass all tags into view */
             var tags = await tagRepo.GetAllAsync();
             var model = new AddBlogPostRequest
             {
@@ -25,7 +23,6 @@ namespace Blog.Web.Controllers
             };
             return View(model);
         }
-        /* 68. Create Add action method (POST) */
         [HttpPost]
         public async Task<IActionResult> Add(AddBlogPostRequest addBlogPostRequest)
         { 

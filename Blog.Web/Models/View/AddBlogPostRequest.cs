@@ -1,5 +1,4 @@
-﻿/* 62. Create view model */
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blog.Web.Models.View
 {
@@ -14,8 +13,8 @@ namespace Blog.Web.Models.View
         public DateTime PublishedDate { get; set; }
         public string Author { get; set; }
         public bool Visible { get; set; }
-        /* 64. Create props about tags */
         public IEnumerable<SelectListItem> Tags { get; set; }
-        public string SelectedTag { get; set; }
+        /* 69. Handle multiple tags  */
+        public string[] SelectedTag { get; set; } = Array.Empty<string>();
     }
 }
