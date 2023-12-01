@@ -52,16 +52,45 @@ namespace Blog.Web.Controllers
             blogPost.Tags = selectedTags;
 
             await blogPostRepo.AddAsync(blogPost);
-            /* 86. Redirect to List */
             return RedirectToAction("List");
         }
-        /* 79. Create List action method (GET) */
         [HttpGet]
         public async Task<IActionResult> List() 
         {
-            /* 82. Get all blog posts and pass to view */
             var blogPosts = await blogPostRepo.GetAllAsync();
             return View(blogPosts);
         }
+        /* 88. Create Edit action method (GET) */
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {  
+            /* 91. Get blog post by Id */
+            var blogPost = await blogPostRepo.GetAsync(id);
+
+            /* 93. Map domain model to view model */
+            if (blogPost != null)
+            {
+                var model = new EditBlogPostRequest
+                {
+                    Id = blogPost.Id,
+                    Heading = blogPost.Heading,
+                    PageTitle = blogPost.PageTitle,
+                    Content = blogPost.Content,
+                    Author = blogPost.Author,
+                    FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                    UrlHandle = blogPost.UrlHandle,
+                    ShortDescription = blogPost.ShortDescription,
+                    PublishedDate = blogPost.PublishedDate,
+                    Visible = blogPost.Visible,
+                };
+                var tags = await tagRepo.GetAllAsync();
+                model.Tags = tags.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() });
+                model.SelectedTags = blogPost.Tags.Select(x => x.Id.ToString()).ToArray();
+
+                return View(model);
+            }
+            return View(null);
+        }
+
     }
 }

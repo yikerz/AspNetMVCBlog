@@ -22,15 +22,15 @@ namespace Blog.Web.Repositories
         {
             throw new NotImplementedException();
         }
-        /* 81. Implements GetAllAsync (include related prop) */
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
             return await blogDbContext.BlogPosts.Include(x=>x.Tags).ToListAsync();
         }
 
-        public Task<BlogPost?> GetAsync(Guid id)
+        /* 90. Implements GetAsync */
+        public async Task<BlogPost?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await blogDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<BlogPost?> UpdateAsync(BlogPost blogPost)

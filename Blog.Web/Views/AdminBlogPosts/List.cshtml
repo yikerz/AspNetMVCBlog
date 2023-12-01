@@ -1,7 +1,5 @@
-﻿@* 83. Declare @model *@
-@model List<Blog.Web.Models.Domain.BlogPost>
+﻿@model List<Blog.Web.Models.Domain.BlogPost>
 
-@* 80. Create List view with header *@
 @{
 }
 
@@ -11,7 +9,6 @@
     </div>
 </div>
 
-@* 84. Conditional render table to display all blog posts *@
 <div class="container py-5">
     @if (Model != null && Model.Any())
     {
@@ -21,6 +18,8 @@
                     <th>Id</th>
                     <th>Heading</th>
                     <th>Tags</th>
+                    @* 87. Add edit column *@
+                    <th> </th>
                 </tr>
             </thead>
             <tbody>
@@ -36,6 +35,13 @@
                                     <span class="badge bg-secondary me-1">@tag.Name</span>
                                 }
                             </div>
+                        </td>
+                        @* 87. Add edit column *@
+                        <td>
+                            <a asp-area=""
+                               asp-controller="AdminBlogPosts"
+                               asp-action="Edit"
+                               asp-route-id="@blogPost.Id" >Edit</a>
                         </td>
                     </tr>
                 }
