@@ -127,11 +127,9 @@ namespace Blog.Web.Controllers
 
             return RedirectToAction("Edit", new { id = editBlogPostRequest.Id });
         }
-        /* 102. Create Delete action method (POST) */
         [HttpPost]
         public async Task<IActionResult> Delete(EditBlogPostRequest editBlogPostRequest) 
         {
-            /* 104. Complete the action method */
             var deletedPost = await blogPostRepo.DeleteAsync(editBlogPostRequest.Id);
             if (deletedPost != null)
             {

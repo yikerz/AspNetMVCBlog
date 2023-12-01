@@ -20,7 +20,6 @@ namespace Blog.Web.Repositories
 
         public async Task<BlogPost?> DeleteAsync(Guid id)
         {
-            /* 103. Implements DeleteAsync */
             var blogPost = await blogDbContext.BlogPosts.FindAsync(id);
             if (blogPost != null)
             {
@@ -42,7 +41,8 @@ namespace Blog.Web.Repositories
 
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
-            var existingBlogPost = await blogDbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+            /* Fixing bug: forget to include related prop */
+            var existingBlogPost = await blogDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
             if (existingBlogPost != null)
             {
                 existingBlogPost.Id = blogPost.Id;

@@ -62,7 +62,6 @@
                         asp-items="@Model.Tags"
                         asp-for="SelectedTags"></select>
             </div>
-            @* 101. Create delete button *@
             <div class="mb-3 d-flex">
                 <button type="submit" class="btn btn-dark"
                     asp-area=""
@@ -84,3 +83,9 @@
         <p>No blog post found</p>
     }
 </div>
+@* 107. Apply Froala editor for content input *@
+@section Scripts {
+    <script>
+        var editor = new FroalaEditor('#content');
+    </script>
+}
