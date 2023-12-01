@@ -1,5 +1,4 @@
-﻿/* 72. Create repo class */
-using Blog.Web.Data;
+﻿using Blog.Web.Data;
 using Blog.Web.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,13 +6,11 @@ namespace Blog.Web.Repositories
 {
     public class BlogPostRepository : IBlogPostRepository
     {
-        /* 73. Create constructor taking DbContext */
         private readonly BlogDbContext blogDbContext;
         public BlogPostRepository(BlogDbContext blogDbContext)
         {
             this.blogDbContext = blogDbContext;
         }
-        /* 74. Implements AddAsync */
         public async Task<BlogPost> AddAsync(BlogPost blogPost)
         {
             await blogDbContext.AddAsync(blogPost);
@@ -25,10 +22,10 @@ namespace Blog.Web.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public Task<IEnumerable<BlogPost>> GetAllAsync()
+        /* 81. Implements GetAllAsync (include related prop) */
+        public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await blogDbContext.BlogPosts.Include(x=>x.Tags).ToListAsync();
         }
 
         public Task<BlogPost?> GetAsync(Guid id)

@@ -8,7 +8,6 @@ namespace Blog.Web.Controllers
 {
     public class AdminBlogPostsController : Controller
     {
-        /* 76. Add blogPostRepo param into constructor */
         private readonly ITagRepository tagRepo;
         private readonly IBlogPostRepository blogPostRepo;
         public AdminBlogPostsController(ITagRepository tagRepo, IBlogPostRepository blogPostRepo)
@@ -29,7 +28,6 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddBlogPostRequest addBlogPostRequest)
         {
-            /* 77. Map view model to domain model */
             var blogPost = new BlogPost
             {
                 Heading = addBlogPostRequest.Heading,
@@ -53,10 +51,17 @@ namespace Blog.Web.Controllers
             }
             blogPost.Tags = selectedTags;
 
-            /* 78. Add to database and save */
             await blogPostRepo.AddAsync(blogPost);
-            return RedirectToAction("Add");
+            /* 86. Redirect to List */
+            return RedirectToAction("List");
         }
-
+        /* 79. Create List action method (GET) */
+        [HttpGet]
+        public async Task<IActionResult> List() 
+        {
+            /* 82. Get all blog posts and pass to view */
+            var blogPosts = await blogPostRepo.GetAllAsync();
+            return View(blogPosts);
+        }
     }
 }
