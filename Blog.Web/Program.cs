@@ -12,7 +12,6 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("BlogConnectionSt
 
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
-/* 118. Inject ImageRepo */
 builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();
 
 var app = builder.Build();

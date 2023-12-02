@@ -9,7 +9,6 @@ namespace Blog.Web.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        /* 119. Create constructor taking IImageRepo */
         private readonly IImageRepository imageRepo;
         public ImagesController(IImageRepository imageRepo)
         {
@@ -19,9 +18,7 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadAsync(IFormFile file)
         {
-            /* 120. Upload file */
             var imageURL = await imageRepo.UploadAsync(file);
-            /* 121. Return Json object or Problem */
             if (imageURL == null)
             {
                 return Problem("Something went wrong!", null, (int)HttpStatusCode.InternalServerError);
