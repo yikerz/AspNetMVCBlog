@@ -70,7 +70,10 @@
 
 @section Scripts {
     <script>
-        var editor = new FroalaEditor('#content');
+        /* 133. Use controller to upload image in Froala editor */
+        var editor = new FroalaEditor('#content', {
+            imageUploadURL: '/api/images'
+        });
 
         const featuredUploadElement = document.getElementById("featuredImageUpload");
         featuredUploadElement.addEventListener('change', uploadFeaturedImage);

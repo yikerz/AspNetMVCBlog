@@ -33,7 +33,6 @@
                 <label class="form-label">Short Description</label>
                 <input type="text" id="shortDescription" class="form-control" asp-for="ShortDescription" />
             </div>
-            @* 132. Copy from Add.cshtml *@
             <div class="mb-3">
                 <label class="form-label">Featured Image Upload</label>
                 <input type="file" id="featuredImageUpload" class="form-control" />
@@ -99,8 +98,11 @@
 
 @section Scripts {
     <script>
-        var editor = new FroalaEditor('#content');
-        /* 132. Copy from Add.cshtml */
+        /* 133. Use controller to upload image in Froala editor */
+        var editor = new FroalaEditor('#content', {
+            imageUploadURL: '/api/images'
+        });
+
         const featuredUploadElement = document.getElementById("featuredImageUpload");
         featuredUploadElement.addEventListener('change', uploadFeaturedImage);
         const featuredImageUrlElement = document.getElementById("featuredImageUrl");
