@@ -26,11 +26,9 @@
             <label class="form-label">Short Description</label>
             <input type="text" id="shortDescription" class="form-control" asp-for="ShortDescription" />
         </div>
-        @* 123. Create file upload input *@
         <div class="mb-3">
             <label class="form-label">Featured Image Upload</label>
             <input type="file" id="featuredImageUpload" class="form-control" />
-            @* 130. Create image tag to display the image after upload *@
             <img src="" id="featuredImageDisplay" style="display: none; width: 300px;"/>
         </div>
         <div class="mb-3">
@@ -74,20 +72,16 @@
     <script>
         var editor = new FroalaEditor('#content');
 
-        /* 124. Add change event listener to featuredImageUpload */
         const featuredUploadElement = document.getElementById("featuredImageUpload");
         featuredUploadElement.addEventListener('change', uploadFeaturedImage);
-        /* 128. Get element featuredImageUrl */
         const featuredImageUrlElement = document.getElementById("featuredImageUrl");
-        /* 131. Get element featuredImageUpload */
         const featuredImageDisplayElement = document.getElementById("featuredImageDisplay");
 
-        /* 125. Create function for event listener */
         async function uploadFeaturedImage(e) {
-            /* 126. Create new FormData and add incoming file */
+
             let data = new FormData();
             data.append('file', e.target.files[0]);
-            /* 127. Fetch data to controller */
+
             await fetch('/api/images', {
                 method: "POST",
                 headers: {
@@ -96,11 +90,10 @@
                 body: data,
             }).then(response => response.json())
                 .then(result => { 
-                    /* 129. Auto-fill featured Image URL */
                     featuredImageUrlElement.readOnly = false;
                     featuredImageUrlElement.value = result.link;
                     featuredImageUrlElement.readOnly = true;
-                    /* 131. Switch on display */
+
                     featuredImageDisplayElement.src = result.link;
                     featuredImageDisplayElement.style.display = 'block';
                 });
