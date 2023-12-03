@@ -2,6 +2,7 @@
 using Blog.Web.Models.Domain;
 using Blog.Web.Models.View;
 using Blog.Web.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -15,7 +16,8 @@ namespace Blog.Web.Controllers
         {
             this.tagRepo = tagRepo;
         }
-
+        /* 201. Require login */
+        [Authorize]
         [HttpGet]
         public IActionResult Add()
         {
