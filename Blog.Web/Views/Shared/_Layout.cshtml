@@ -1,5 +1,4 @@
-﻿@* 197. Inject sign in manager *@
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> signInManager
 
 <!DOCTYPE html>
@@ -61,7 +60,6 @@
                     </ul>
 
                     <div class="d-flex align-items-center">
-                        @* 198. Display username and logout button if signed in *@
                         @if (signInManager.IsSignedIn(User))
                         {
                             <div class="me-3 text-light">
@@ -75,7 +73,6 @@
                         }
                         else
                         { 
-                            @* 196. Create login button *@
                             <div class="d-flex">
                                 <a class="btn me-3 bg-light text-dark"
                                    asp-area=""

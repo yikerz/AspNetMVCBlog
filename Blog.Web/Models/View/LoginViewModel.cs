@@ -1,5 +1,4 @@
-﻿/* 191. Create view model and props for Login request */
-namespace Blog.Web.Models.View
+﻿namespace Blog.Web.Models.View
 {
     public class LoginViewModel
     {

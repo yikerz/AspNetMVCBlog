@@ -6,7 +6,6 @@ namespace Blog.Web.Controllers
 {
     public class AccountController : Controller
     {
-        /* 194. Add SignInManager to the constructor */
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
@@ -38,17 +37,14 @@ namespace Blog.Web.Controllers
             }
             return View();
         }
-        /* 188. Create Login action method (GET) */
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
-        /* 193. Create Login action method (POST) */
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            /* 195. Sign In */
             var signInResponse = await signInManager.PasswordSignInAsync(loginViewModel.Username, 
                                                     loginViewModel.Password, 
                                                     false, false);
@@ -58,6 +54,13 @@ namespace Blog.Web.Controllers
             }
             
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            /* 200. Logout */
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
