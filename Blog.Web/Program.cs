@@ -11,12 +11,21 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BlogDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("BlogConnectionString")));
 
-/* 170. Inject AuthDbContext */
 builder.Services.AddDbContext<AuthDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAuthConnectionString")));
-/* 171. Config data type for AuthDbContext storage */
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();
+
+/* 187. Default password requirement */
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default settings
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 8;
+});
 
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
@@ -37,7 +46,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-/* 172. Add UseAuthentication */
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -6,7 +6,8 @@ namespace Blog.Web.Data
 {
     public class AuthDbContext : IdentityDbContext
     {
-        public AuthDbContext(DbContextOptions options) : base(options)
+        /* 185. Specify generic type for DbContextOptions */
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
