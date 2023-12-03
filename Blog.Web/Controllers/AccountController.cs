@@ -37,11 +37,9 @@ namespace Blog.Web.Controllers
             }
             return View();
         }
-        /* 207. Add returnUrl as param */
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
-            /* 209. Instantiate view model and pass to view */
             var model = new LoginViewModel
             {
                 ReturnUrl = returnUrl
@@ -56,7 +54,6 @@ namespace Blog.Web.Controllers
                                                     false, false);
             if (signInResponse != null && signInResponse.Succeeded)
             {
-                /* 211. Redirect to return URL if exists */
                 if (!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl))
                 {
                     return Redirect(loginViewModel.ReturnUrl);
