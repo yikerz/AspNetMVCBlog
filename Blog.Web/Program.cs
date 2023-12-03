@@ -16,7 +16,6 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAuthConnecti
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();
 
-/* 187. Default password requirement */
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default settings

@@ -5,7 +5,6 @@ namespace Blog.Web.Data
 {
     public class BlogDbContext : DbContext
     {
-        /* 185. Specify generic type for DbContextOptions */
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
         }

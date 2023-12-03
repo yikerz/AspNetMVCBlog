@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@* 197. Inject sign in manager *@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -55,14 +59,40 @@
                             </ul>
                         </li>
                     </ul>
-                    @* 186. Create register button *@
-                    <div class="d-flex">
-                        <a class="btn me-3 bg-light text-dark"
-                            asp-area=""
-                            asp-controller="Account"
-                            asp-action="Register"
-                        >Register</a>
+
+                    <div class="d-flex align-items-center">
+                        @* 198. Display username and logout button if signed in *@
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <div class="me-3 text-light">
+                                @User?.Identity?.Name
+                            </div>
+
+                            <a class="btn me-3 bg-light text-dark"
+                                asp-area=""
+                                asp-controller="Account"
+                                asp-action="Logout">Logout</a>
+                        }
+                        else
+                        { 
+                            @* 196. Create login button *@
+                            <div class="d-flex">
+                                <a class="btn me-3 bg-light text-dark"
+                                   asp-area=""
+                                   asp-controller="Account"
+                                   asp-action="Login">Login</a>
+                            </div>
+
+                            <div class="d-flex">
+                                <a class="btn me-3 bg-light text-dark"
+                                    asp-area=""
+                                    asp-controller="Account"
+                                    asp-action="Register"
+                                >Register</a>
+                            </div>
+                        }
                     </div>
+
 
                 </div>
             </div>

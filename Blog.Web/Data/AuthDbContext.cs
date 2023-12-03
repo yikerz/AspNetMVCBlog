@@ -6,7 +6,6 @@ namespace Blog.Web.Data
 {
     public class AuthDbContext : IdentityDbContext
     {
-        /* 185. Specify generic type for DbContextOptions */
         public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
         }
