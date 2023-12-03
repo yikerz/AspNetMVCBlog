@@ -16,14 +16,14 @@ namespace Blog.Web.Controllers
         {
             this.tagRepo = tagRepo;
         }
-        /* 201. Require login */
-        [Authorize]
+        /* 202. Restrict access to normal user */
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(AddTagRequest addTagRequest) 
         {
@@ -37,7 +37,7 @@ namespace Blog.Web.Controllers
 
             return RedirectToAction("List"); 
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> List()
         {
@@ -45,6 +45,7 @@ namespace Blog.Web.Controllers
 
             return View(tags);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -62,6 +63,7 @@ namespace Blog.Web.Controllers
 
             return View(null);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditTagRequest editTagRequest)
         {
@@ -79,6 +81,7 @@ namespace Blog.Web.Controllers
             }
             return RedirectToAction("Edit", new { id = editTagRequest.Id });
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest) 
         {

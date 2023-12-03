@@ -61,5 +61,11 @@ namespace Blog.Web.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        /* 203. Create AccessDenied action method (GET) */
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
