@@ -7,7 +7,6 @@ namespace Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        /* 137. Add blogPostRepo to constructor  */
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogPostRepository blogPostRepo;
 
@@ -19,7 +18,6 @@ namespace Blog.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            /* 138. Get all posts and pass to view */
             var blogPosts = await blogPostRepo.GetAllAsync();
             return View(blogPosts);
         }

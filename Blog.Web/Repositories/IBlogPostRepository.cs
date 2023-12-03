@@ -9,6 +9,7 @@ namespace Blog.Web.Repositories
         Task<BlogPost?> GetAsync(Guid id);
         Task<BlogPost?> UpdateAsync(BlogPost blogPost);
         Task<BlogPost?> DeleteAsync(Guid id);
-
+        /* 144. Add GetByUrlHandleAsync */
+        Task<BlogPost?> GetByUrlHandleAsync(string urlHandle);
     }
 }

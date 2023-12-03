@@ -61,5 +61,12 @@ namespace Blog.Web.Repositories
             }
             return null;
         }
+        /* 145. Implement new method from interface */
+        public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle)
+        {
+            return await blogDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+
+        }
+
     }
 }

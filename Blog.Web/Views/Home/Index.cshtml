@@ -1,11 +1,9 @@
-﻿@* 139. Declare @model *@
-@model List<Blog.Web.Models.Domain.BlogPost>
+﻿@model List<Blog.Web.Models.Domain.BlogPost>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@* 135. Header and intro of App *@
 <div class="container col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-5 py-5">
         <div class="col-12 col-lg-6">
@@ -19,7 +17,6 @@
                 Join the app and get weekly blogs in your email.
             </p>
         </div>
-        @* 136. Display image *@
         <div class="col-12 col-lg-6">
             <img 
                 src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -30,7 +27,6 @@
     </div>
 </div>
 
-@* 140. Display all blog posts *@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
@@ -55,8 +51,13 @@
                             }
                         </p>
                         <p class="mb-4">@blogPost.ShortDescription</p>
-
-                        <a class="btn btn-dark" href="#">Read More</a>
+                        @* 143. Add asp navigation *@
+                        <a class="btn btn-dark" 
+                            asp-area=""
+                            asp-controller="Blogs"
+                            asp-action="Index"
+                            asp-route-urlHandle="@blogPost.UrlHandle"
+                        >Read More</a>
                     </div>
                 }
             }
