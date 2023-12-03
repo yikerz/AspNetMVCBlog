@@ -37,10 +37,16 @@ namespace Blog.Web.Controllers
             }
             return View();
         }
+        /* 207. Add returnUrl as param */
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            /* 209. Instantiate view model and pass to view */
+            var model = new LoginViewModel
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
@@ -50,6 +56,11 @@ namespace Blog.Web.Controllers
                                                     false, false);
             if (signInResponse != null && signInResponse.Succeeded)
             {
+                /* 211. Redirect to return URL if exists */
+                if (!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl))
+                {
+                    return Redirect(loginViewModel.ReturnUrl);
+                }
                 return RedirectToAction("Index", "Home");
             }
             
@@ -61,7 +72,6 @@ namespace Blog.Web.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        /* 203. Create AccessDenied action method (GET) */
         [HttpGet]
         public IActionResult AccessDenied()
         {

@@ -16,7 +16,6 @@ namespace Blog.Web.Controllers
         {
             this.tagRepo = tagRepo;
         }
-        /* 202. Restrict access to normal user */
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Add()
