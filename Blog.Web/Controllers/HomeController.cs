@@ -10,7 +10,6 @@ namespace Blog.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogPostRepository blogPostRepo;
-        /* 150. Add ITagRepo to constructor */
         private readonly ITagRepository tagRepo;
 
         public HomeController(ILogger<HomeController> logger, IBlogPostRepository blogPostRepo, ITagRepository tagRepo)
@@ -23,9 +22,7 @@ namespace Blog.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var blogPosts = await blogPostRepo.GetAllAsync();
-            /* 151. Get all tags */
             var tags = await tagRepo.GetAllAsync();
-            /* 157. Create HomeViewModel and pass to view */
             var homeViewModel = new HomeViewModel
             {
                 BlogPosts = blogPosts,
