@@ -1,5 +1,4 @@
-﻿/* 212 Create new domain model for like */
-namespace Blog.Web.Models.Domain
+﻿namespace Blog.Web.Models.Domain
 {
     public class BlogPostLike
     {

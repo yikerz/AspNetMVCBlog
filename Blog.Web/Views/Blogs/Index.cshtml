@@ -1,4 +1,5 @@
-﻿@model Blog.Web.Models.Domain.BlogPost
+﻿@* 227. Change @model from BlogPost to BlogDetailsViewModel *@
+@model Blog.Web.Models.View.BlogDetailsViewModel
 
 @{
     ViewData["Title"] = Model.PageTitle;
@@ -14,6 +15,10 @@
                 <div class="d-flex justify-content-between mb-3">
                     <span class="text-secondary">@Model.Author</span>
                     <span class="text-secondary">@Model.PublishedDate</span>
+                </div>
+                @* 216. Show number of Likes *@
+                <div class="mb-3">
+                    <span>@Model.TotalLikes</span> likes
                 </div>
 
                 <div class="mb-3 d-flex">
