@@ -1,20 +1,26 @@
-﻿/* 219. Create Like Repo */
-using Blog.Web.Data;
+﻿using Blog.Web.Data;
+using Blog.Web.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Repositories
 {
     public class BlogPostLikeRepository : IBlogPostLikeRepository
     {
-        /* 220. Create constructor taking blogDbContext */
         private readonly BlogDbContext blogDbContext;
         public BlogPostLikeRepository(BlogDbContext blogDbContext)
         {
             this.blogDbContext = blogDbContext;
         }
+        /* 236. Implement AddLikeForBlog */
+        public async Task<BlogPostLike> AddLikeForBlog(BlogPostLike blogPostLike)
+        {
+            await blogDbContext.BlogPostLikes.AddAsync(blogPostLike);
+            await blogDbContext.SaveChangesAsync();
+            return blogPostLike;
+        }
+
         public async Task<int> GetTotalLikesAsync(Guid blogPostId)
         {
-            /* 221. Count likes by post Id */
             return await blogDbContext.BlogPostLikes.CountAsync(x => x.PostId == blogPostId); 
         }
     }

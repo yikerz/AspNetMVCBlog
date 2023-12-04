@@ -1,5 +1,9 @@
-﻿@* 227. Change @model from BlogPost to BlogDetailsViewModel *@
+﻿@* 229. Inject signInManager and userManager *@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+@inject UserManager<IdentityUser> userManager
 @model Blog.Web.Models.View.BlogDetailsViewModel
+
 
 @{
     ViewData["Title"] = Model.PageTitle;
@@ -16,8 +20,14 @@
                     <span class="text-secondary">@Model.Author</span>
                     <span class="text-secondary">@Model.PublishedDate</span>
                 </div>
-                @* 216. Show number of Likes *@
                 <div class="mb-3">
+                    @* 230. Show clickable thumbs up icon if logged in *@
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                      <a id="btnLike" style="cursor: pointer">
+                            <i class="bi bi-hand-thumbs-up"></i>
+                      </a>  
+                    }
                     <span>@Model.TotalLikes</span> likes
                 </div>
 
@@ -41,3 +51,30 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        /* 241. Add click listener to like button */
+        const btnLikeElement = document.getElementById("btnLike");
+        btnLikeElement.addEventListener("click", addLikeForBlog);
+
+        /* 242. Create function addLikeForBlog */
+        async function addLikeForBlog() {
+            fetch('/api/BlogPostLike/Add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                },
+                body: JSON.stringify({ 
+                    blogPostId: '@Model.Id',
+                    userId: '@userManager.GetUserId(User)'
+                })
+            }).then(console.log('Like request finished'))
+                .catch(error => { 
+                    console.log(error)
+                })
+        }
+
+    </script>
+}

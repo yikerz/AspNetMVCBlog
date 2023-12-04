@@ -6,7 +6,6 @@ namespace Blog.Web.Controllers
 {
     public class BlogsController : Controller
     {
-        /* 223. Add blogPostLikeRepo to constructor */
         private readonly IBlogPostRepository blogPostRepo;
         private readonly IBlogPostLikeRepository blogPostLikeRepo;
 
@@ -21,12 +20,11 @@ namespace Blog.Web.Controllers
 
             var blogPost = await blogPostRepo.GetByUrlHandleAsync(urlHandle);
             var blogDetailsViewModel = new BlogDetailsViewModel();
-            /* 224. Get total Likes */
+
             if (blogPost != null)
             {
                 var likes = await blogPostLikeRepo.GetTotalLikesAsync(blogPost.Id);
 
-                /* 226. Map from domain model to view model */
                 blogDetailsViewModel = new BlogDetailsViewModel
                 {
                     Id = blogPost.Id,

@@ -1,5 +1,4 @@
-﻿/* 225. Create view model to combine two domain model, blogPost and blogPostLike */
-using Blog.Web.Models.Domain;
+﻿using Blog.Web.Models.Domain;
 
 namespace Blog.Web.Models.View
 {
