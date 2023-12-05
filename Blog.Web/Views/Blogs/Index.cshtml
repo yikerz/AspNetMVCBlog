@@ -1,5 +1,4 @@
-﻿@* 229. Inject signInManager and userManager *@
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> signInManager
 @inject UserManager<IdentityUser> userManager
 @model Blog.Web.Models.View.BlogDetailsViewModel
@@ -21,14 +20,25 @@
                     <span class="text-secondary">@Model.PublishedDate</span>
                 </div>
                 <div class="mb-3">
-                    @* 230. Show clickable thumbs up icon if logged in *@
+
                     @if (signInManager.IsSignedIn(User))
                     {
-                      <a id="btnLike" style="cursor: pointer">
-                            <i class="bi bi-hand-thumbs-up"></i>
-                      </a>  
+                        /* 258. Conditional display like icon depending on the post is liked or not */
+                        if (Model.Liked)
+                        {
+                            <a style="cursor: pointer">
+                                <i class="bi bi-hand-thumbs-up-fill"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="btnLike" style="cursor: pointer">
+                                <i class="bi bi-hand-thumbs-up"></i>
+                            </a>  
+                        }
                     }
-                    <span>@Model.TotalLikes</span> likes
+                    @* 246. Add id for JS *@
+                    <span id="totalLikes">@Model.TotalLikes</span> likes
                 </div>
 
                 <div class="mb-3 d-flex">
@@ -54,11 +64,10 @@
 
 @section Scripts {
     <script>
-        /* 241. Add click listener to like button */
         const btnLikeElement = document.getElementById("btnLike");
         btnLikeElement.addEventListener("click", addLikeForBlog);
+        const totalLikesElement = document.getElementById("totalLikes");
 
-        /* 242. Create function addLikeForBlog */
         async function addLikeForBlog() {
             fetch('/api/BlogPostLike/Add', {
                 method: 'POST',
@@ -70,10 +79,27 @@
                     blogPostId: '@Model.Id',
                     userId: '@userManager.GetUserId(User)'
                 })
-            }).then(console.log('Like request finished'))
-                .catch(error => { 
-                    console.log(error)
-                })
+            }).then(() => {
+                /* 244. Change icons and makes it unclickable */
+                btnLikeElement.innerHTML = '<i class="bi bi-hand-thumbs-up-fill"></i>';
+                btnLikeElement.removeEventListener('click', addLikeForBlog);
+                getTotalLikes();
+            })
+        }
+        /* 247. Create getTotalLikes function */
+        async function getTotalLikes() {
+            /* 248. Fetch GET request to get total likes and pass to #totalLike.innerHTML */
+            fetch('/api/BlogPostLike/@Model.Id/total_likes', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': '*/*'
+                }
+            }).then(data => data.json())
+            .then(result => {
+                totalLikesElement.innerHTML = result
+            }).catch(error => { 
+            console.log(error)});
         }
 
     </script>

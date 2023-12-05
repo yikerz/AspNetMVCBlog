@@ -1,5 +1,4 @@
-﻿/* 233. Add view model for post like request */
-namespace Blog.Web.Models.View
+﻿namespace Blog.Web.Models.View
 {
     public class AddLikeRequest
     {

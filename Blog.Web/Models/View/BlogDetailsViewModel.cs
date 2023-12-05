@@ -16,5 +16,7 @@ namespace Blog.Web.Models.View
         public bool Visible { get; set; }
         public ICollection<Tag> Tags { get; set; }
         public int TotalLikes { get; set; }
+        /* 257. Add Liked prop */
+        public bool Liked { get; set; }
     }
 }

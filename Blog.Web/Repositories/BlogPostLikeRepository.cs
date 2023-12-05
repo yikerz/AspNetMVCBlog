@@ -11,12 +11,16 @@ namespace Blog.Web.Repositories
         {
             this.blogDbContext = blogDbContext;
         }
-        /* 236. Implement AddLikeForBlog */
         public async Task<BlogPostLike> AddLikeForBlog(BlogPostLike blogPostLike)
         {
             await blogDbContext.BlogPostLikes.AddAsync(blogPostLike);
             await blogDbContext.SaveChangesAsync();
             return blogPostLike;
+        }
+        /* 251. Implements GetLikesForBlog */
+        public async Task<IEnumerable<BlogPostLike>> GetLikesForBlog(Guid blogPostId)
+        {
+            return await blogDbContext.BlogPostLikes.Where(x => x.PostId == blogPostId).ToListAsync();
         }
 
         public async Task<int> GetTotalLikesAsync(Guid blogPostId)
