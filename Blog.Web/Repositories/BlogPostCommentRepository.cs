@@ -1,6 +1,6 @@
-﻿/* 268. Create BlogPostCommentRepo, constructor and implements interface method */
-using Blog.Web.Data;
+﻿using Blog.Web.Data;
 using Blog.Web.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Repositories
 {
@@ -16,6 +16,11 @@ namespace Blog.Web.Repositories
             await blogDbContext.BlogPostComments.AddAsync(blogPostComment);
             await blogDbContext.SaveChangesAsync();
             return blogPostComment;
+        }
+        /* 274. Method to get all comments by blog Id */
+        public async Task<IEnumerable<BlogPostComment>> GetCommentByBlogIdAsync(Guid blogPostId)
+        {
+            return await blogDbContext.BlogPostComments.Where(x => x.BlogPostId == blogPostId).ToListAsync();
         }
     }
 }

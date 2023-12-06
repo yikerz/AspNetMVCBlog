@@ -10,7 +10,6 @@ namespace Blog.Web.Controllers
     {
         private readonly IBlogPostRepository blogPostRepo;
         private readonly IBlogPostLikeRepository blogPostLikeRepo;
-        /* 270. Add comment repo into constructor */
         private readonly IBlogPostCommentRepository blogPostCommentRepo;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly UserManager<IdentityUser> userManager;
@@ -49,6 +48,19 @@ namespace Blog.Web.Controllers
                         liked = likeFromUser != null;
                     }
                 }
+                /* 275. Get all comments by post */
+                var blogComments = await blogPostCommentRepo.GetCommentByBlogIdAsync(blogPost.Id);
+                /* 277. Add comment to a list one-by-one */
+                var blogCommentsForView = new List<BlogComment>();
+                foreach (var blogComment in blogComments)
+                {
+                    blogCommentsForView.Add(new BlogComment
+                    {
+                        Description = blogComment.Description,
+                        DateAdded = blogComment.DateAdded,
+                        Username = (await userManager.FindByIdAsync(blogComment.UserId.ToString())).UserName
+                    });
+                }
 
                 blogDetailsViewModel = new BlogDetailsViewModel
                 {
@@ -63,19 +75,18 @@ namespace Blog.Web.Controllers
                     UrlHandle = blogPost.UrlHandle,
                     Visible = blogPost.Visible,
                     Tags = blogPost.Tags,
-                    /* 256. Add Liked into view model */
                     Liked = liked,
+                    /* 278. Add comment list to view model */
+                    Comments = blogCommentsForView,
                 };
                 blogDetailsViewModel.TotalLikes = likes;
             }
 
             return View(blogDetailsViewModel);
         }
-        /* 264. Create Index action method (POST) */
         [HttpPost]
         public async Task<IActionResult> Index(BlogDetailsViewModel blogDetailsViewModel)
         {
-            /* 271. Implement POST method */
             if (signInManager.IsSignedIn(User))
             {
                 var blogPostComment = new BlogPostComment
