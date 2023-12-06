@@ -28,7 +28,6 @@ namespace Blog.Web.Controllers
 
             return Ok();
         }
-        /* 245. Create GetTotalLikesForBlog action method (GET) */
         [HttpGet]
         [Route("{blogPostId:Guid}/total_likes")]
         public async Task<IActionResult> GetTotalLikesForBlog([FromRoute] Guid blogPostId)

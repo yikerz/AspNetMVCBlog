@@ -17,7 +17,6 @@ namespace Blog.Web.Repositories
             await blogDbContext.SaveChangesAsync();
             return blogPostLike;
         }
-        /* 251. Implements GetLikesForBlog */
         public async Task<IEnumerable<BlogPostLike>> GetLikesForBlog(Guid blogPostId)
         {
             return await blogDbContext.BlogPostLikes.Where(x => x.PostId == blogPostId).ToListAsync();

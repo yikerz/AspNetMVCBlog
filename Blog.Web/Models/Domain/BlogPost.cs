@@ -16,5 +16,7 @@ namespace Blog.Web.Models.Domain
         public bool Visible { get; set; }
         public ICollection<Tag> Tags { get; set; }
         public ICollection<BlogPostLike> Likes { get; set; }
+        /* 260. Related prop to comments */
+        public ICollection<BlogPostComment> Comments { get; set; }
     }
 }

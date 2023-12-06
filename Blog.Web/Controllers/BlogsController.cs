@@ -9,7 +9,6 @@ namespace Blog.Web.Controllers
     {
         private readonly IBlogPostRepository blogPostRepo;
         private readonly IBlogPostLikeRepository blogPostLikeRepo;
-        /* 249. Add SignInManager and UserManager in constructor */
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly UserManager<IdentityUser> userManager;
 
@@ -29,7 +28,6 @@ namespace Blog.Web.Controllers
 
             var blogPost = await blogPostRepo.GetByUrlHandleAsync(urlHandle);
             var blogDetailsViewModel = new BlogDetailsViewModel();
-            /* 252. Initialize liked state by current user */
             var liked = false;
 
             if (blogPost != null)
@@ -38,11 +36,8 @@ namespace Blog.Web.Controllers
 
                 if (signInManager.IsSignedIn(User))
                 {
-                    /* 253. Get all Likes if User is logged in */
                     var likesForBlog = await blogPostLikeRepo.GetLikesForBlog(blogPost.Id);
-                    /* 254. Get userId using userManager */
                     var userId = userManager.GetUserId(User);
-                    /* 255. Set liked state to true */
                     if (userId != null)
                     {
                         var likeFromUser = likesForBlog.FirstOrDefault(x => x.UserId == Guid.Parse(userId));
