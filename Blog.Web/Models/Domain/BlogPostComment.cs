@@ -1,5 +1,4 @@
-﻿/* 259. Domain model for BlogPostComment with props */
-namespace Blog.Web.Models.Domain
+﻿namespace Blog.Web.Models.Domain
 {
     public class BlogPostComment
     {

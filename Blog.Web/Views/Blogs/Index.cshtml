@@ -51,6 +51,34 @@
                 <div class="mb-3 blog-details-content">
                     @Html.Raw(Model.Content)
                 </div>
+
+                @* 263. Comment div *@
+                <div class="card">
+                    @* 263.1 Display add comment form if user is logged in *@
+                    <div class="card-header">
+                        <h5>Comments</h5>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <form method="post">
+                                <div class="mb-3">
+                                    <label class="form-label">Comment Description</label>
+                                    <input type="text" class="form-control" asp-for="CommentDescription" />
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-dark">Submit</button>
+                                    @* 266. Data binding with post id *@
+                                    <input type="hidden" asp-for="Id"/>
+                                    @* 272. Pass urlHandle for redirecting after adding comments *@
+                                    <input type="hidden" asp-for="UrlHandle"/>
+                                </div>
+                            </form>
+                        }
+                    </div>
+
+                    <div class="card-body">
+
+                    </div>
+                </div>
             }
             else
             {
