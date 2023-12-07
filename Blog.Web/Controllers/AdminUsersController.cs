@@ -63,7 +63,6 @@ namespace Blog.Web.Controllers
             }
             return View();
         }
-        /* 304. Create and implement Delete action method (POST) */
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
