@@ -1,5 +1,4 @@
-﻿/* 287.1 Create view model for individual user */
-namespace Blog.Web.Models.View
+﻿namespace Blog.Web.Models.View
 {
     public class User
     {

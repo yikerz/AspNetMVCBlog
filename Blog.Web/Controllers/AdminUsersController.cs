@@ -1,26 +1,25 @@
-﻿/* 280. Controllers for admin to manage users */
-using Blog.Web.Models.View;
+﻿using Blog.Web.Models.View;
 using Blog.Web.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Web.Controllers
 {
-    /* 291. Add authorization to admin only */
     [Authorize(Roles = "Admin")]
     public class AdminUsersController : Controller
     {
-        /* 286. Create constructor taking userRepo */
         private readonly IUserRepository userRepo;
-        public AdminUsersController(IUserRepository userRepo)
+        /* 300. Inject userManager */
+        private readonly UserManager<IdentityUser> userManager;
+        public AdminUsersController(IUserRepository userRepo, UserManager<IdentityUser> userManager)
         {
             this.userRepo = userRepo;
+            this.userManager = userManager;
         }
-        /* 281. Create List action method (GET) */
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            /* 288. Implement List action (GET) */
             var users = await userRepo.GetAll();
 
             var usersViewModel = new UserViewModel();
@@ -35,6 +34,36 @@ namespace Blog.Web.Controllers
             }
 
             return View(usersViewModel);
+        }
+        /* 301. Implement List action method (POST) */
+        [HttpPost]
+        public async Task<IActionResult> List(UserViewModel request)
+        {
+            var identityUser = new IdentityUser
+            {
+                UserName = request.Username,
+                Email = request.Email,
+            };
+            var identityResult = await userManager.CreateAsync(identityUser, request.Password);
+            if (identityResult != null)
+            {
+                if (identityResult.Succeeded)
+                {
+                    var roles = new List<string> { "User" };
+                    if (request.AdminRoleCheckbox)
+                    {
+                        roles.Add("Admin");
+                    }
+
+                    identityResult = await userManager.AddToRolesAsync(identityUser, roles);
+
+                    if (identityResult != null && identityResult.Succeeded)
+                    {
+                        return RedirectToAction("List", "AdminUsers");
+                    }
+                }
+            }
+            return View();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿/* 283. Create UserRepo with constructor taking AuthDbContext */
-using Blog.Web.Data;
+﻿using Blog.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +11,6 @@ namespace Blog.Web.Repositories
         {
             this.authDbContext = authDbContext;
         }
-        /* 284. Implement GetAll */
         public async Task<IEnumerable<IdentityUser>> GetAll()
         {
             var users = await authDbContext.Users.ToListAsync();
