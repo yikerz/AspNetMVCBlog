@@ -4,7 +4,6 @@ namespace Blog.Web.Models.View
 {
     public class LoginViewModel
     {
-        /* 312. Add annotation to input */
         [Required]
         public string Username { get; set; }
         [Required]

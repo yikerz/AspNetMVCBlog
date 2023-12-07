@@ -52,7 +52,6 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            /* 313. Check inputs are valid */
             if (!ModelState.IsValid) {
                 return View();
             }
