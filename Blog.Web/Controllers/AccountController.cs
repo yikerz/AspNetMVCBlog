@@ -21,7 +21,6 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
-            /* 306. Check the input state is valid before running */
             if (ModelState.IsValid)
             {
                 var identityUser = new IdentityUser
