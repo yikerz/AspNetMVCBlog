@@ -12,12 +12,18 @@
             <form method="post">
                 <div class="mb-3">
                     <label class="form-label">Username</label>
-                    <input type="text" id="username" class="form-control" asp-for="Username" />
+                    @* 314. Add annotation for input validation *@
+                    <input type="text" id="username" class="form-control" asp-for="Username" required />
+                    @* 315. Display error message if needed *@
+                    <span class="text-danger" asp-validation-for="Username" ></span>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" id="password" class="form-control" asp-for="Password" />
+                    @* 314. Add annotation for input validation *@
+                    <input type="password" id="password" class="form-control" asp-for="Password" required minlength="8" />
+                    @* 315. Display error message if needed *@
+                    <span class="text-danger" asp-validation-for="Password" ></span>
                 </div>
 
                 <div class="mb-3">
