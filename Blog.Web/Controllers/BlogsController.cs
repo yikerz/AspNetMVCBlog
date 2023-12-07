@@ -48,10 +48,9 @@ namespace Blog.Web.Controllers
                         liked = likeFromUser != null;
                     }
                 }
-                /* 275. Get all comments by post */
                 var blogComments = await blogPostCommentRepo.GetCommentByBlogIdAsync(blogPost.Id);
-                /* 277. Add comment to a list one-by-one */
                 var blogCommentsForView = new List<BlogComment>();
+
                 foreach (var blogComment in blogComments)
                 {
                     blogCommentsForView.Add(new BlogComment
@@ -76,7 +75,6 @@ namespace Blog.Web.Controllers
                     Visible = blogPost.Visible,
                     Tags = blogPost.Tags,
                     Liked = liked,
-                    /* 278. Add comment list to view model */
                     Comments = blogCommentsForView,
                 };
                 blogDetailsViewModel.TotalLikes = likes;

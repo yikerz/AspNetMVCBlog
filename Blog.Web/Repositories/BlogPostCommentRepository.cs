@@ -17,7 +17,6 @@ namespace Blog.Web.Repositories
             await blogDbContext.SaveChangesAsync();
             return blogPostComment;
         }
-        /* 274. Method to get all comments by blog Id */
         public async Task<IEnumerable<BlogPostComment>> GetCommentByBlogIdAsync(Guid blogPostId)
         {
             return await blogDbContext.BlogPostComments.Where(x => x.BlogPostId == blogPostId).ToListAsync();

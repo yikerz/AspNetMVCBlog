@@ -18,7 +18,6 @@ namespace Blog.Web.Models.View
         public int TotalLikes { get; set; }
         public bool Liked { get; set; }
         public string CommentDescription { get; set; }
-        /* 276. Props to store list of comments */
         public IEnumerable<BlogComment> Comments { get; set; }
     }
 }

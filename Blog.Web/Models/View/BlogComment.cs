@@ -1,5 +1,4 @@
-﻿/* 273. Create new view model for displaying comments */
-namespace Blog.Web.Models.View
+﻿namespace Blog.Web.Models.View
 {
     public class BlogComment
     {
