@@ -52,9 +52,9 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            if (!ModelState.IsValid) {
-                return View();
-            }
+            //if (!ModelState.IsValid) {
+            //    return View();
+            //}
             var signInResponse = await signInManager.PasswordSignInAsync(loginViewModel.Username, 
                                                     loginViewModel.Password, 
                                                     false, false);
@@ -66,7 +66,6 @@ namespace Blog.Web.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
-            
             return View();
         }
         [HttpGet]

@@ -26,7 +26,9 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddTagRequest addTagRequest) 
         {
-            /* 317. Check ModelState */
+            /* 319. Run custom validation */
+            ValidateAddTagRequest(addTagRequest);
+
             if (!ModelState.IsValid)
             {
                 return View();
@@ -97,6 +99,17 @@ namespace Blog.Web.Controllers
             }
 
             return RedirectToAction("Edit", new { id = editTagRequest.Id });
+        }
+
+        public void ValidateAddTagRequest(AddTagRequest request)
+        {
+            if (request.Name != null && request.DisplayName != null)
+            {
+                if (request.Name == request.DisplayName)
+                {
+                    ModelState.AddModelError("DisplayName", "Name cannot be the same as DisplayName");
+                }
+            }
         }
 
     }

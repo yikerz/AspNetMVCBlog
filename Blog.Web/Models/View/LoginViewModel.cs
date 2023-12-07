@@ -9,7 +9,6 @@ namespace Blog.Web.Models.View
         [Required]
         [MinLength(8, ErrorMessage = "Password has to be at least 8 characters")]
         public string Password { get; set; }
-        [Required]
         public string ReturnUrl { get; set; }
     }
 }
