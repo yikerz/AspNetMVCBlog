@@ -11,7 +11,6 @@
 <div>
     <div class="container py-5">
 
-        @* 293. Create button to create new user *@
         <div class="mb-3 d-flex justify-content-end">
             <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalCreateUser">
                 Create User
@@ -26,6 +25,7 @@
                         <th>Id</th>
                         <th>Username</th>
                         <th>Email</th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +35,15 @@
                             <td>@user.Id</td>
                             <td>@user.Username</td>
                             <td>@user.EmailAddress</td>
+                            @* 303. Create delete user form *@
+                            <td>
+                                <form method="post" 
+                                    asp-controller="AdminUsers" 
+                                    asp-action="Delete" 
+                                    asp-route-id="@user.Id">
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -47,7 +56,6 @@
     </div>
 </div>
 
-@* 298. Wrap modal with form tags *@
 <form method="post">
     <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -57,7 +65,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @* 296. Add input into modal body *@
                     <div class="mb-3">
                         <label class="form-label">Username</label>
                         <input type="text" class="form-control" asp-for="Username"/>
@@ -75,7 +82,7 @@
                            <input type="checkbox" id="chkUserRole" class="form-check-input" checked disabled />
                            <label class="form-check-label" for="chkUserRole">User Role</label>
                        </div>
-                       @* 302. Only super admin can create admin account *@
+
                         @if (User.IsInRole("SuperAdmin"))
                         {
                             <div class="form-check">

@@ -10,7 +10,6 @@ namespace Blog.Web.Controllers
     public class AdminUsersController : Controller
     {
         private readonly IUserRepository userRepo;
-        /* 300. Inject userManager */
         private readonly UserManager<IdentityUser> userManager;
         public AdminUsersController(IUserRepository userRepo, UserManager<IdentityUser> userManager)
         {
@@ -35,7 +34,6 @@ namespace Blog.Web.Controllers
 
             return View(usersViewModel);
         }
-        /* 301. Implement List action method (POST) */
         [HttpPost]
         public async Task<IActionResult> List(UserViewModel request)
         {
@@ -63,6 +61,22 @@ namespace Blog.Web.Controllers
                     }
                 }
             }
+            return View();
+        }
+        /* 304. Create and implement Delete action method (POST) */
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user != null)
+            {
+                var identityResult = await userManager.DeleteAsync(user);
+                if (identityResult != null && identityResult.Succeeded)
+                {
+                    return RedirectToAction("List", "AdminUsers");
+                }
+            }
+
             return View();
         }
     }
